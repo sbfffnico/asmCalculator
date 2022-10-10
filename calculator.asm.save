@@ -1,0 +1,45 @@
+%include "/usr/local/share/csc314/asm_io.inc"
+
+
+segment .data
+
+
+segment .bss
+
+
+segment .text
+	global  asm_main
+
+asm_main:
+	push	ebp
+	mov		ebp, esp
+	; ********** CODE STARTS HERE **********
+
+	call	read_int
+	
+	mov 	ebx, eax	; ebx is Acall	read_char
+	call	read_char	; sets to al initially
+	call	read_int
+	mov		ecx, eax	; ecx is B
+
+	cmp		al, 43		; ascii for + is 43
+	je		addition
+
+	addition:
+	add		ebx, ecx	; add A into B
+	mov		eax, ebx	; mov ebx into eax for printing
+	jmp		print
+
+	print:
+	mov		al, '='
+	call	print_char
+	call	print_nl
+	call 	print_int
+	call 	print_nl
+
+
+	; *********** CODE ENDS HERE ***********
+	mov		eax, 0
+	mov		esp, ebp
+	pop		ebp
+	ret
